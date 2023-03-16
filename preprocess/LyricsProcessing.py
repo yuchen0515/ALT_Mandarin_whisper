@@ -28,11 +28,15 @@ class LyricsProcessing:
         if filename == "":
             filename = self.output_filename
 
-        with open(filename, 'w', encoding=self.encoding) as output_file:
-            for key, val in self.data.items():
+        filename, filetype = filename.split('.')
+        counter = 1
+
+        for key, val in self.data.items():
+            with open(f"{filename}_{counter:05}.{filetype}", 'w', encoding=self.encoding) as output_file:
                 output_file.write(f"{key}\n")
                 for s, e, w in val:
                     output_file.write(f"<{s}> <{e}> {w}\n")
+            counter += 1
 
     def parser(self):
         with open(self.filepath, 'r', encoding=self.encoding) as file:
